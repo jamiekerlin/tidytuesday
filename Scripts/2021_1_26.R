@@ -105,7 +105,9 @@ country_coords <- country_centroids %>%
 
 plastics2019_bigcompany <- plastics2019_bigcompany %>%
   mutate(country = recode(country, 'ECUADOR' = "Ecuador", 'NIGERIA' = "Nigeria",
-  '' "United States"))
+                          'United States of America' = "United States"))
+plastics2020_bigcompany <- plastics2020_bigcompany %>%
+  mutate(country = recode(country, 'United States of America' = "United States"))
 
 #Join new dataset to other one
 
@@ -114,7 +116,7 @@ coords2019joined <- inner_join(plastics2019_bigcompany, country_coords,
 
 coords2020joined <- inner_join(plastics2020_bigcompany, country_coords, 
                                by = "country")
-#Rename coca cola
+#Rename companies
 
 coords2019joined <- coords2019joined %>%
   mutate(parent_company = recode(parent_company, 'The Coca-Cola Company' = "Coca Cola",
@@ -124,86 +126,8 @@ coords2020joined <- coords2020joined %>%
   mutate(parent_company = recode(parent_company, 'The Coca-Cola Company' = "Coca Cola",
                                  'PepsiCo' = "Pepsi"))
 
-#See what it looks like with companies separated
-coords2019pepsico <- coords2019joined %>%
-  filter(parent_company == "PepsiCo")
 
-#Ok now going to try to create map
-
-#PEPSICO
-
-world <- map_data("world")
-
-pepsimap2019 <- ggplot() + geom_polygon(data = world, aes(x = long, y= lat, 
-                                                      group = group)) + coord_fixed(1.3) +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_rect(fill = 'white', colour = 'white'),
-        axis.line = element_line(colour = "white"), legend.position = "none", 
-        axis.ticks = element_blank(), axis.text.x = element_blank(),
-        axis.text.y = element_blank(), axis.title.x = element_blank(), 
-        axis.title.y = element_blank()) +
-  ggtitle("2019 Plastic Pollution from Pepsi Company") +
-  geom_point(data = coords2019pepsico, aes(x = Longitude, y = Latitude,
-                                           color = "blue",
-                                          size = grand_total))
-pepsimap2019
-              
-                                           
-#THE COCA-COLA COMPANY
-
-coords2019cocacola <- coords2019joined %>%
-  filter(parent_company == "The Coca-Cola Company")
-
-#Ok now going to try to create map
-
-
-world <- map_data("world")
-
-cocacolamap2019 <- ggplot() + geom_polygon(data = world, aes(x = long, y= lat, 
-                                                          group = group)) + coord_fixed(1.3) +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_rect(fill = 'white', colour = 'white'),
-        axis.line = element_line(colour = "white"), legend.position = "none", 
-        axis.ticks = element_blank(), axis.text.x = element_blank(),
-        axis.text.y = element_blank(), axis.title.x = element_blank(), 
-        axis.title.y = element_blank()) +
-  ggtitle("2019 Plastic Pollution from The Coca-Cola Company") +
-  geom_point(data = coords2019cocacola, aes(x = Longitude, y = Latitude,
-                                           color = "blue",
-                                           size = grand_total))
-cocacolamap2019
-
-
-#NESTLE
-
-coords2019nestle <- coords2019joined %>%
-  filter(parent_company == "Nestlé")
-
-#Ok now going to try to create map
-
-
-world <- map_data("world")
-
-nestlemap2019 <- ggplot() + geom_polygon(data = world, aes(x = long, y= lat, 
-                                                             group = group)) + coord_fixed(1.3) +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_rect(fill = 'white', colour = 'white'),
-        axis.line = element_line(colour = "white"), legend.position = "none", 
-        axis.ticks = element_blank(), axis.text.x = element_blank(),
-        axis.text.y = element_blank(), axis.title.x = element_blank(), 
-        axis.title.y = element_blank()) +
-  ggtitle("2019 Plastic Pollution from Nestlé") +
-  geom_point(data = coords2019nestle, aes(x = Longitude, y = Latitude,
-                                            color = "blue",
-                                            size = grand_total))
-nestlemap2019
-
-
-#Maybe try to overlay each map??
-
-install.packages("gganimate")
-library(gganimate)
-
+#Create map of 2019
 
 all2019 <- ggplot() + geom_polygon(data = world, aes(x = long, y= lat, group = group)) + coord_fixed(1.3) +
   geom_point(data = coords2019joined, aes(x = Longitude, y = Latitude,
@@ -222,6 +146,24 @@ all2019 <- ggplot() + geom_polygon(data = world, aes(x = long, y= lat, group = g
   
 all2019
 
+#Create map of 2020
+
+all2020 <- ggplot() + geom_polygon(data = world, aes(x = long, y= lat, group = group)) + coord_fixed(1.3) +
+  geom_point(data = coords2020joined, aes(x = Longitude, y = Latitude,
+                                          color = parent_company,
+                                          size = grand_total))+
+  scale_size(range = c(2,8))+
+  guides(color = guide_legend(title = "Company"))+
+  guides(size = guide_legend(title = "Plastic Count")) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = 'white', colour = 'white'),
+        axis.line = element_line(colour = "white"), 
+        axis.ticks = element_blank(), axis.text.x = element_blank(),
+        axis.text.y = element_blank(), axis.title.x = element_blank(), 
+        axis.title.y = element_blank()) +
+  ggtitle("2020 Global Plastic Pollution")
+
+all2020
 
 
                        
