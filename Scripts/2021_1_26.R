@@ -55,7 +55,7 @@ plastics2020_company <- plastics2020_company %>%
 
 levels(factor(plastics2019_company$parent_company))
 
-#Find large companies of US- PepsiCo, Nestle, Coca-Cola
+#Find large companies- PepsiCo, Nestle, Coca-Cola
 
 bigcompanies <- c("PepsiCo", "Nestle", "The Coca-Cola Company", 
                                 "Pepsico", "Pepsi", "Coca-Cola",
@@ -72,9 +72,6 @@ plastics2019_bigcompany <- plastics2019_bigcompany %>%
 
 plastics2020_bigcompany <- plastics2020_bigcompany %>%
   filter(country != "EMPTY")
-
-#I want to make something that shows larger logos of the big companies
-#in areas where they have the most plastic waste that was found on world map
 
 library(ggplot2)
 install.packages("ggmap")
@@ -95,11 +92,20 @@ worldmap <- ggplot() + geom_polygon(data = world, aes(x = long, y= lat,
         axis.title.y = element_blank())
 worldmap
 
+country_centroids <- read.csv("Data/country_centroids.csv")
+
 #Here I got the dataset country_centroids and working off this
 
 country_coords <- country_centroids %>%
   select(c(name_long, Longitude, Latitude)) %>%
   rename('country' = "name_long")
+
+#Need to rename a couple of things to match the coords file
+#Ecuador, Nigeria, and United States of America need to be changed
+
+plastics2019_bigcompany <- plastics2019_bigcompany %>%
+  mutate(country = recode(country, 'ECUADOR' = "Ecuador", 'NIGERIA' = "Nigeria",
+  '' "United States"))
 
 #Join new dataset to other one
 
@@ -212,7 +218,7 @@ all2019 <- ggplot() + geom_polygon(data = world, aes(x = long, y= lat, group = g
         axis.ticks = element_blank(), axis.text.x = element_blank(),
         axis.text.y = element_blank(), axis.title.x = element_blank(), 
         axis.title.y = element_blank()) +
-  ggtitle("2019 Plastic Pollution from Large U.S. Companies")
+  ggtitle("2019 Global Plastic Pollution")
   
 all2019
 
