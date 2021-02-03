@@ -98,7 +98,7 @@ female_enrollment_plot <-hbcu_percentchange %>%
   #Add labels/title
   labs(title = "Female Enrollment in HBCUs",
        subtitle = str_wrap("Between 1976 and 2015, with total HBCU enrollment
-       (in thousands) and percent change compared to the previous year of data."),
+       (in tens of thousands) and percent change compared to the previous year of data."),
        y = "Females Enrolled (Tens of thousands)",
        x = "Year")
 
