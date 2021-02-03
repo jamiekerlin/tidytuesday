@@ -83,7 +83,7 @@ female_enrollment_plot <-hbcu_percentchange %>%
                                        type = "closed")) +
   geom_point(colour = "grey40", size = 2) +
   #Add text to specify percent changes
-  geom_text(nudge_x = 2, nudge_y = 1, aes(y = case_when(pct_change_female > 0 ~ yend + .5,
+  geom_text(nudge_y = 1, aes(y = case_when(pct_change_female > 0 ~ yend + .5,
                                                         TRUE ~ yend - 2.5),
                                           label = pct_change_female %>%
                                             round(digits = 1) %>% paste0("%"),
