@@ -8,7 +8,6 @@ library(tidytuesdayR)
 library(tidyverse)
 library(ggplot2)
 library(viridis)
-library(hrbrthemes)
 
 #### Load data #########
 data <- tidytuesdayR::tt_load('2021-02-09')
@@ -40,7 +39,7 @@ ggplot(data = combined_dist, mapping = aes(x = year,
                                            color = race)) +
   geom_line(size = 1.3) +
   scale_color_viridis_d() +
-  labs(title = "Racial Inequality in the U.S.", 
+  labs(title = "Racial Wealth Inequality in the U.S.", 
        subtitle = "Mean Income (USD) Trends from 1967-2019",
        x = "Year",
        y = "Mean Income (USD)",
