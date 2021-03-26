@@ -9,6 +9,8 @@ library(tidyverse)
 library(tidytuesdayR)
 library(here)
 library(gganimate)
+library(ggstream)
+
 
 ### Load data #################################################
 tuesdata <- tidytuesdayR::tt_load('2021-03-16')
@@ -29,3 +31,23 @@ ggplot(data = games,
   coord_flip() +
   transition_states(
     year)
+
+
+ggplot(data = games,
+       mapping = aes(x = year, 
+                     y = peak,
+                     fill = month)) + 
+  geom_stream()
+
+
+ggplot(games, aes(year, gain, fill = month)) +
+  geom_stream()
+
+
+
+
+
+
+
+
+
