@@ -9,3 +9,5 @@
    * [2021-02-09](https://github.com/jamiekerlin/tidytuesday/tree/master/Output/2021_02_09)
    * [2021-02-23](https://github.com/jamiekerlin/tidytuesday/tree/master/Output/2021_02_23)
    * [2021-03-02](https://github.com/jamiekerlin/tidytuesday/tree/master/Output/2021_03_02)
+   * [2021-03-09](https://github.com/jamiekerlin/tidytuesday/tree/master/Output/2021_03_09)
+   * [2021-03-16](https://github.com/jamiekerlin/tidytuesday/tree/master/Output/2021_03_16)
