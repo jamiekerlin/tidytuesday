@@ -12,7 +12,7 @@ library(maps)
 library(ggmap)
 library(geosphere)
 
-register_google(key = "AIzaSyAezWIEOVUEFn8bZrRnxIoINQ2Pj8Uj-iw")
+register_google(key = "")
 
 ### Load data ##############################################################
 tuesdata <- tidytuesdayR::tt_load('2022-02-08')
